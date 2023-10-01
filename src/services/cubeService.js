@@ -1,30 +1,14 @@
-const uniqid = require('uniqid');
+const Cube = require('./../models/Cube');
+const cubes = [];
 
-const cubes = [
-  // {
-  //   id: '8ewc9vkln0rrvzf',
-  //   name: 'cube1',
-  //   description: 'asd',
-  //   imageUrl: 'https://images.pexels.com/photos/1340185/pexels-photo-1340185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-  //   difficultyLevel: 1
-  // },
-  // {
-  //   id: '8ewc9vkln0rs8z8',
-  //   name: 'cube2',
-  //   description: 'wqe',
-  //   imageUrl: 'https://images.pexels.com/photos/1340185/pexels-photo-1340185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-  //   difficultyLevel: 6
-  // }
-];
+exports.create = async (cubeData) => {
+  // const cube = new Cube.create(cubeData);
+  // await cube.save();
 
-exports.create = (cubeData) => {
-  const newCube = {
-    id: uniqid(),
-    ...cubeData,
-  }
+  const cube = await Cube.create(cubeData);
 
-  cubes.push(newCube);
-}
+  return cube;
+};
 
 exports.getAll = (search, from, to) => {
   let filterCubes = [...cubes];
