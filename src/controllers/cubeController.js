@@ -27,7 +27,10 @@ router.get('/:cubeId/details', async (req, res) => {
     return;
   }
 
-  res.render('cube/details', { cube });
+  const accessories = cube.accessories;
+  const hasAccessories =
+    accessories === undefined ? false : accessories.length > 0;
+  res.render('cube/details', { cube, accessories, hasAccessories });
 });
 
 //* accessory attachment
