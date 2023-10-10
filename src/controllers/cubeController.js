@@ -62,4 +62,12 @@ router.post('/:cubeId/attach-accessory', async (req, res) => {
   res.redirect(`/cubes/${cubeId}/details`);
 });
 
+router.get('/:cube/edit', (req, res) => {
+  res.render('cube/edit');
+});
+
+router.get('/:cube/delete', (req, res) => {
+  res.render('cube/delete');
+});
+
 module.exports = router;
