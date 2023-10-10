@@ -2,8 +2,9 @@ const router = require('express').Router();
 const cubeService = require('../services/cubeService');
 const accessoryService = require('../services/accessoryService');
 const { difficultyLevelOptionsViewData } = require('../utils/viewData');
+const { isAuth } = require('./../middlewares/authMiddleware');
 
-router.get('/create', (req, res) => {
+router.get('/create', isAuth, (req, res) => {
   res.render('cube/create');
 });
 
@@ -66,6 +67,12 @@ router.post('/:cubeId/attach-accessory', async (req, res) => {
 router.get("/:cubeId/edit", async (req, res) => {
   const { cubeId } = req.params;
   const cube = await cubeService.getSingleCube(cubeId).lean();
+
+  // ! This should be implemented everywhere for safety!!
+  if (cube.owner?.toString() !== req.user._id) {
+    return res.redirect('/404');
+  }
+
   const options = difficultyLevelOptionsViewData(cube.difficultyLevel);
 
   res.render('cube/edit', { cube, options });
